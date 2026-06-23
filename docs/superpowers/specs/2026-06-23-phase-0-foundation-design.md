@@ -96,12 +96,20 @@ directories, and `.DS_Store` — matching honeyindex's `.gitignore`.
 
 ## Deployment Workflow
 
-Same as honeyindex — no CI/CD:
+Different from honeyindex: gowonderlu.com is on Hostinger's single-site
+plan, which has no SSH access (honeyindex's business plan does). Its
+hosting panel only exposes a **GIT** tool under Advanced, with a
+"Deploy from GitHub" OAuth connector — auto-deploy on push, no manual
+File Manager copying:
 
 1. Edit files locally in VS Code (Claude Code assists).
-2. Commit + push to GitHub (history/backup, not auto-deploy).
-3. Manually copy the new/changed files into Hostinger's File Manager at the
-   matching `wp-content/themes/...` or `wp-content/plugins/...` path.
+2. Commit + push to GitHub.
+3. Hostinger's GIT integration (connected via OAuth to `lemuntu/gowonderlu`)
+   auto-deploys the pushed files to the configured target directory on the
+   live site.
+
+This is an intentional deviation from honeyindex's "no CI/CD" convention —
+forced by the hosting plan, not a stylistic choice.
 
 ## WordPress Base Setup
 
