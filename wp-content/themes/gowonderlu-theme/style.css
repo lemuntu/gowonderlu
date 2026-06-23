@@ -11,7 +11,8 @@ Version: 0.1.0
 	--gw-navy: #0B1F3A;
 	--gw-amber: #F5A623;
 	--gw-white: #FFFFFF;
-	--gw-mist: #F7F8FA;
+	--gw-surface: #F7F8FA;
+	--gw-border: #E8E4DE;
 	--gw-ink: #1A1A1A;
 	--gw-slate: #5B6472;
 }
@@ -23,78 +24,25 @@ Version: 0.1.0
 .gw-page {
 	display: block;
 	width: 100%;
-}
-
-.gw-hero {
-	position: relative;
-	background: var(--gw-navy);
-	overflow: hidden;
-}
-
-.gw-hero-grid {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	position: relative;
-}
-
-.gw-hero-grid::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 50%;
-	width: 6px;
-	background: var(--gw-amber);
-	transform: skewX(-8deg) translateX(-50%);
-}
-
-.gw-hero-panel {
-	padding: 88px 64px;
-	color: var(--gw-white);
-}
-
-.gw-hero-panel.gw-customers {
-	padding-right: 80px;
-}
-
-.gw-hero-panel.gw-drivers {
-	padding-left: 80px;
+	font-family: 'DM Sans', sans-serif;
 }
 
 .gw-eyebrow {
-	font-family: 'IBM Plex Mono', monospace;
-	font-size: 13px;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--gw-amber);
-	font-weight: 500;
 	display: block;
-	margin-bottom: 10px;
-}
-
-.gw-hero-panel h1 {
-	font-family: 'Big Shoulders Display', sans-serif;
-	font-weight: 800;
-	font-size: 42px;
-	line-height: 1.05;
-	margin: 0 0 18px;
-}
-
-.gw-hero-panel p {
-	color: #cfd6e4;
-	font-size: 16px;
-	line-height: 1.6;
-	max-width: 380px;
-	margin: 0 0 28px;
+	font-size: 13px;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	color: var(--gw-slate);
+	margin-bottom: 14px;
 }
 
 .gw-btn {
 	display: inline-block;
-	font-family: 'Inter', sans-serif;
+	font-family: 'DM Sans', sans-serif;
 	font-weight: 600;
-	font-size: 15px;
-	padding: 14px 30px;
-	border-radius: 3px;
+	font-size: 14.5px;
+	padding: 12px 26px;
+	border-radius: 8px;
 	text-decoration: none;
 }
 
@@ -105,105 +53,177 @@ Version: 0.1.0
 
 .gw-btn-outline {
 	background: transparent;
-	border: 2px solid var(--gw-amber);
-	color: var(--gw-amber);
+	border: 1.5px solid var(--gw-navy);
+	color: var(--gw-navy);
 }
 
 .gw-btn:focus-visible {
-	outline: 3px solid var(--gw-white);
+	outline: 3px solid var(--gw-navy);
 	outline-offset: 2px;
 }
 
+.gw-hero {
+	padding: 100px 56px 90px;
+	text-align: center;
+	max-width: 760px;
+	margin: 0 auto;
+}
+
+.gw-hero .gw-eyebrow {
+	text-align: center;
+}
+
+.gw-hero h1 {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 54px;
+	color: var(--gw-navy);
+	line-height: 1.15;
+	margin: 0 0 20px;
+}
+
+.gw-hero p {
+	color: var(--gw-slate);
+	font-size: 17px;
+	line-height: 1.6;
+	margin: 0;
+}
+
+.gw-panels {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+	max-width: 920px;
+	margin: 0 auto 90px;
+	padding: 0 56px;
+}
+
+.gw-panel {
+	background: var(--gw-white);
+	border: 0.5px solid var(--gw-border);
+	border-radius: 14px;
+	padding: 36px;
+	text-align: left;
+}
+
+.gw-panel .gw-eyebrow {
+	color: var(--gw-amber);
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.gw-panel h2 {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 26px;
+	color: var(--gw-navy);
+	margin: 0 0 10px;
+}
+
+.gw-panel p {
+	color: var(--gw-slate);
+	font-size: 14.5px;
+	line-height: 1.6;
+	margin: 0 0 22px;
+}
+
 .gw-how {
-	background: var(--gw-mist);
-	padding: 90px 48px;
+	padding: 80px 56px;
+	text-align: center;
+	background: var(--gw-white);
+	border-top: 0.5px solid var(--gw-border);
+	border-bottom: 0.5px solid var(--gw-border);
+}
+
+.gw-how .gw-eyebrow {
+	color: var(--gw-amber);
 	text-align: center;
 }
 
 .gw-how h2,
 .gw-testimonials h2 {
-	font-family: 'Big Shoulders Display', sans-serif;
-	font-weight: 800;
-	font-size: 32px;
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 34px;
 	color: var(--gw-navy);
-	margin: 0 0 48px;
+	margin: 0 0 50px;
 }
 
 .gw-steps {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 40px;
-	max-width: 920px;
+	gap: 36px;
+	max-width: 880px;
 	margin: 0 auto;
 	text-align: left;
 }
 
 .gw-step-number {
-	font-family: 'IBM Plex Mono', monospace;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: var(--gw-surface);
+	border: 0.5px solid var(--gw-border);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	font-size: 13px;
-	letter-spacing: 1px;
-	color: var(--gw-amber);
+	color: var(--gw-navy);
+	font-weight: 600;
+	margin-bottom: 14px;
 }
 
 .gw-step h3 {
-	font-family: 'Big Shoulders Display', sans-serif;
-	font-weight: 800;
-	font-size: 22px;
+	font-family: 'DM Sans', sans-serif;
+	font-size: 17px;
+	font-weight: 600;
 	color: var(--gw-navy);
-	margin: 8px 0 10px;
+	margin: 0 0 8px;
 }
 
 .gw-step p {
 	color: var(--gw-slate);
-	font-size: 15px;
+	font-size: 14px;
 	line-height: 1.55;
 	margin: 0;
 }
 
 .gw-testimonials {
-	padding: 90px 48px;
-	background: var(--gw-white);
+	padding: 90px 56px;
+	background: var(--gw-surface);
+	text-align: center;
+}
+
+.gw-testimonials .gw-eyebrow {
+	color: var(--gw-amber);
 	text-align: center;
 }
 
 .gw-quotes {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 28px;
+	gap: 24px;
 	max-width: 1040px;
 	margin: 0 auto;
 	text-align: left;
 }
 
 .gw-quote {
-	background: var(--gw-mist);
-	padding: 28px;
-	border-radius: 4px;
-	position: relative;
-}
-
-.gw-quote::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 34px;
-	height: 4px;
-	background: var(--gw-amber);
-	transform: skewX(-20deg);
+	background: var(--gw-white);
+	border: 0.5px solid var(--gw-border);
+	border-radius: 12px;
+	padding: 26px;
 }
 
 .gw-quote p {
-	font-size: 15px;
+	font-size: 14.5px;
 	line-height: 1.6;
 	color: var(--gw-ink);
 	margin: 0 0 16px;
 }
 
 .gw-quote .gw-attr {
-	font-family: 'IBM Plex Mono', monospace;
-	font-size: 12px;
-	letter-spacing: .5px;
+	font-size: 13px;
 	color: var(--gw-slate);
 }
 
@@ -211,26 +231,18 @@ Version: 0.1.0
 	background: var(--gw-amber) !important;
 	color: var(--gw-navy) !important;
 	padding: 8px 18px !important;
-	border-radius: 3px !important;
+	border-radius: 6px !important;
 	font-weight: 600 !important;
 }
 
 @media (max-width: 768px) {
-	.gw-hero-grid {
-		grid-template-columns: 1fr;
-	}
-
-	.gw-hero-grid::before {
-		display: none;
-	}
-
-	.gw-hero-panel.gw-customers,
-	.gw-hero-panel.gw-drivers {
-		padding: 48px 28px;
-	}
-
+	.gw-panels,
 	.gw-steps,
 	.gw-quotes {
 		grid-template-columns: 1fr;
+	}
+
+	.gw-hero h1 {
+		font-size: 38px;
 	}
 }

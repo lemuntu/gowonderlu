@@ -5,19 +5,23 @@ get_header();
 <div class="gw-page">
 
 <section class="gw-hero">
-	<div class="gw-hero-grid">
-		<div class="gw-hero-panel gw-customers">
-			<span class="gw-eyebrow">For customers</span>
-			<h1>Need something<br>hauled?</h1>
-			<p>Find a vetted local driver — no truck rental, no hassle.</p>
-			<a href="<?php echo esc_url( home_url( '/register/' ) ); ?>" class="gw-btn gw-btn-fill">Get Started</a>
-		</div>
-		<div class="gw-hero-panel gw-drivers">
-			<span class="gw-eyebrow">For drivers</span>
-			<h1>Have a truck?<br>Earn on your schedule.</h1>
-			<p>Set up your profile and start picking up jobs near you.</p>
-			<a href="<?php echo esc_url( home_url( '/register-vendor/' ) ); ?>" class="gw-btn gw-btn-outline">Become a Driver</a>
-		</div>
+	<span class="gw-eyebrow">A trustworthy way to move anything</span>
+	<h1>Need something hauled?</h1>
+	<p>Find a vetted local driver in minutes — no truck rental, no hassle.</p>
+</section>
+
+<section class="gw-panels">
+	<div class="gw-panel">
+		<span class="gw-eyebrow">For customers</span>
+		<h2>Get it moved</h2>
+		<p>Find a vetted local driver — no truck rental, no hassle.</p>
+		<a href="<?php echo esc_url( home_url( '/register/' ) ); ?>" class="gw-btn gw-btn-fill">Get Started</a>
+	</div>
+	<div class="gw-panel">
+		<span class="gw-eyebrow">For drivers</span>
+		<h2>Earn on your schedule</h2>
+		<p>Set up your profile and start picking up jobs near you.</p>
+		<a href="<?php echo esc_url( home_url( '/register-vendor/' ) ); ?>" class="gw-btn gw-btn-outline">Become a Driver</a>
 	</div>
 </section>
 
@@ -26,17 +30,17 @@ get_header();
 	<h2>Three steps, start to finish</h2>
 	<div class="gw-steps">
 		<div class="gw-step">
-			<div class="gw-step-number">STEP 01</div>
+			<div class="gw-step-number">1</div>
 			<h3>Sign up</h3>
 			<p>Create a customer or driver account in under a minute.</p>
 		</div>
 		<div class="gw-step">
-			<div class="gw-step-number">STEP 02</div>
+			<div class="gw-step-number">2</div>
 			<h3>Get matched</h3>
 			<p>Browse vetted drivers in your area.</p>
 		</div>
 		<div class="gw-step">
-			<div class="gw-step-number">STEP 03</div>
+			<div class="gw-step-number">3</div>
 			<h3>Get it done</h3>
 			<p>Coordinate directly and get your move handled.</p>
 		</div>

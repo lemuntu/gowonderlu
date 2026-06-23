@@ -11,7 +11,7 @@ function gowonderlu_enqueue_styles() {
 
 	wp_enqueue_style(
 		'gowonderlu-fonts',
-		'https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap',
+		'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap',
 		array(),
 		null
 	);
