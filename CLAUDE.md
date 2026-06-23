@@ -26,7 +26,8 @@ Owner: Christian Kakoba (GitHub: `lemuntu`, email: `kryskaka@gmail.com`)
 | Parent theme | Astra |
 | Child theme | `gowonderlu-theme` (in repo at `wp-content/themes/gowonderlu-theme/`) |
 | Marketplace engine | HivePress core + Geolocation, Messages, Reviews extensions (live). Marketplace + Requests extensions are premium hivepress.io add-ons, not in the free WP.org directory — deferred, revisit when a phase actually needs them and the cost is justified |
-| Custom plugins | PHP files in `wp-content/plugins/gowonderlu-*` (none yet — Phase 1+) |
+| Custom plugins | PHP files in `wp-content/plugins/gowonderlu-*` — `gowonderlu-user-fields.php` adds a Phone Number field to registration/account-settings (Phase 1) |
+| Geolocation API | None configured yet — HivePress Geolocation needs a Google Maps or Mapbox API key (Settings → Integrations) before the Location field on forms works. Without it, the field is non-functional (not just unstyled) — blocks listing submission. Needed for Phase 2 |
 | Payments | Stripe Connect (Phase 3 — not yet configured) |
 | Notifications | Email + SMS (Phase 4 — not yet configured) |
 | Local dev | VS Code on macOS, project at `~/codingproject2026/gowonderlu/` |
@@ -113,6 +114,35 @@ revisit once a phase needs them). See
 `docs/superpowers/specs/2026-06-23-phase-0-foundation-design.md` for the
 design and `docs/superpowers/plans/2026-06-23-phase-0-foundation-implementation.md`
 for the implementation plan.
+
+**Phase 1 (Roles + Signup) — complete.** Customers are regular WP users;
+drivers register via `/register-vendor` and become HivePress Vendors with
+Vehicle Type/Vehicle Details attributes. New listings require manual
+admin approval (HivePress Settings → Listings → Submission → Moderation)
+before going live — verified end-to-end with a real test listing
+(submitted → pending → approved → publicly visible). Phone Number field
+added via `gowonderlu-user-fields.php`. Brand colors applied via Astra's
+Customizer (amber accent, navy headings — no custom CSS needed). See
+`docs/superpowers/specs/2026-06-23-phase-1-roles-signup-design.md` and
+`docs/superpowers/plans/2026-06-23-phase-1-roles-signup-implementation.md`.
+
+**Gotchas discovered during Phase 1 (relevant to future phases):**
+- HivePress's frontend routes (`/register-vendor`, `/submit-listing`,
+  etc.) need a **Listings** page and a **Vendors** page to actually exist
+  as WP Pages, assigned in HivePress → Settings → Listings/Vendors — they
+  are not auto-created. Check this first if a HivePress URL 404s or
+  redirects to the homepage.
+- After any fresh WordPress install/reinstall, flush permalinks
+  (Settings → Permalinks → Save Changes) — custom plugin routes won't
+  resolve otherwise.
+- Select-type custom attributes (Vendors/Listings → Attributes) don't
+  have an inline options field — publish the attribute first, then an
+  "Edit Options" taxonomy-term screen becomes available for entering the
+  actual choice list.
+- The site's main navigation menu and homepage are still Astra's default
+  starter-template demo content (Home/Services/About/Reviews/Why
+  Us/Contact) — never wired to HivePress or GoWonderlu's real content.
+  This is real, deliberately-deferred work, not yet a phase.
 
 ---
 
