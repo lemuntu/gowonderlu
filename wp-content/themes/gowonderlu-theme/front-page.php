@@ -2,6 +2,8 @@
 get_header();
 ?>
 
+<div class="gw-page">
+
 <section class="gw-hero">
 	<div class="gw-hero-grid">
 		<div class="gw-hero-panel gw-customers">
@@ -60,6 +62,8 @@ get_header();
 		</div>
 	</div>
 </section>
+
+</div>
 
 <?php
 get_footer();

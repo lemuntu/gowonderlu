@@ -16,6 +16,15 @@ Version: 0.1.0
 	--gw-slate: #5B6472;
 }
 
+/* Astra's .ast-container is display:flex (used for its sidebar layout
+   elsewhere) — without this, our sections become row-laid-out flex items
+   instead of stacking. Scoped to our own wrapper, not .ast-container
+   itself, so other pages keep Astra's normal flex behavior. */
+.gw-page {
+	display: block;
+	width: 100%;
+}
+
 .gw-hero {
 	position: relative;
 	background: var(--gw-navy);
