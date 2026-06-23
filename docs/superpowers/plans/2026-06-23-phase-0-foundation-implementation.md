@@ -6,7 +6,7 @@
 
 **Architecture:** This phase produces no executable application logic — it's repo scaffolding, two SVG brand assets, one markdown brand guide, an authoritative `CLAUDE.md`, a minimal Astra child theme (parent-style passthrough only), and a manual WordPress admin checklist. There are no unit tests; "tests" below are concrete verification steps (render checks, file/byte checks, wp-admin checks) appropriate to static-asset and config work, matching the spec's own "Local: none" testing note.
 
-**Tech Stack:** WordPress (Astra parent theme, HivePress core + 5 extensions), plain PHP child theme, SVG, Markdown, Git/GitHub, Hostinger File Manager (manual deploy, no CI/CD).
+**Tech Stack:** WordPress (Astra parent theme, HivePress core + 3 free extensions live — Marketplace/Requests deferred as premium add-ons), plain PHP child theme, SVG, Markdown, Git/GitHub, Hostinger File Manager (manual deploy, no CI/CD).
 
 ## Global Constraints
 
@@ -565,23 +565,28 @@ rather than attempting to script it.
 
 - [x] Confirm the fresh WordPress install is reachable and admin login
   works. (Reconfirmed after the Task 8 reinstall.)
-- [ ] Install + activate **Astra** (parent theme) from the WP Admin theme
+- [x] Install + activate **Astra** (parent theme) from the WP Admin theme
   directory.
-- [ ] Upload `wp-content/themes/gowonderlu-theme/` (via Hostinger File
-  Manager's browser upload — no SSH on this plan) to the live
-  `wp-content/themes/` directory, then activate it as the active (child)
-  theme.
-- [ ] Install + activate the **HivePress** core plugin.
-- [ ] Install + activate HivePress extensions: **Geolocation**, **Requests**,
-  **Marketplace**, **Messages**, **Reviews**.
-- [ ] Leave everything at default configuration/styling — no changes yet.
+- [x] Install `wp-content/themes/gowonderlu-theme/` (uploaded as a zip
+  directly via WP Admin → Appearance → Themes → Add New → Upload Theme,
+  which worked just as well as File Manager), then activate it as the
+  active (child) theme.
+- [x] Install + activate the **HivePress** core plugin.
+- [x] Install + activate HivePress extensions: **Geolocation**, **Messages**,
+  **Reviews** (all free, found via WP Admin → Plugins → Add New).
+- [x] **Marketplace** and **Requests** extensions deferred — confirmed via
+  hivepress.io's own extension list that these are real HivePress add-ons,
+  but not published to the free WP.org plugin directory (premium-only).
+  Owner decided to defer rather than purchase now; revisit once a specific
+  phase actually needs them.
+- [x] Leave everything at default configuration/styling — no changes yet.
 
-**Verification (user performs in wp-admin):**
+**Verification (user performed in wp-admin):**
 
-- [ ] WP Admin → Appearance → Themes shows `GoWonderlu` active, with `Astra`
+- [x] WP Admin → Appearance → Themes shows `GoWonderlu` active, with `Astra`
   installed as its parent.
-- [ ] WP Admin → Plugins shows HivePress core + all five extensions listed
-  as **Active**, no fatal-error notices.
-- [ ] The homepage loads without PHP errors or a white screen.
+- [x] WP Admin → Plugins shows HivePress core + Geolocation + Messages +
+  Reviews listed as **Active**, no fatal-error notices.
+- [x] The homepage loads without PHP errors or a white screen.
 
 This task has no commit — it's a live-site state change only.

@@ -122,10 +122,13 @@ project should use.
    header declaring the Astra parent + `functions.php` enqueuing parent
    styles — no custom templates yet).
 4. Install + activate **HivePress** core plugin.
-5. Install + activate HivePress extensions: **Geolocation**, **Requests**,
-   **Marketplace**, **Messages**, **Reviews**. (Bookings extension deferred —
-   optional per the original tech stack notes, revisit if/when availability
-   scheduling becomes a priority.)
+5. Install + activate HivePress extensions: **Geolocation**, **Messages**,
+   **Reviews** (free, via the WP.org plugin directory). **Marketplace** and
+   **Requests** are real HivePress extensions but premium hivepress.io
+   add-ons, not published to WP.org — deferred rather than purchased now;
+   revisit once a specific phase needs them. (Bookings extension also
+   deferred — optional per the original tech stack notes, revisit if/when
+   availability scheduling becomes a priority.)
 6. Leave all of the above at default configuration/styling — Phase 1 covers
    role setup and Phase 1+ covers visual theming.
 

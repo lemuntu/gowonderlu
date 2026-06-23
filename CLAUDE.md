@@ -25,7 +25,7 @@ Owner: Christian Kakoba (GitHub: `lemuntu`, email: `kryskaka@gmail.com`)
 | CMS | WordPress |
 | Parent theme | Astra |
 | Child theme | `gowonderlu-theme` (in repo at `wp-content/themes/gowonderlu-theme/`) |
-| Marketplace engine | HivePress core + Geolocation, Requests, Marketplace, Messages, Reviews extensions |
+| Marketplace engine | HivePress core + Geolocation, Messages, Reviews extensions (live). Marketplace + Requests extensions are premium hivepress.io add-ons, not in the free WP.org directory — deferred, revisit when a phase actually needs them and the cost is justified |
 | Custom plugins | PHP files in `wp-content/plugins/gowonderlu-*` (none yet — Phase 1+) |
 | Payments | Stripe Connect (Phase 3 — not yet configured) |
 | Notifications | Email + SMS (Phase 4 — not yet configured) |
@@ -106,7 +106,10 @@ Full rules in `brand/brand-guide.md`.
 
 ## Current Phase Status
 
-**Phase 0 (Foundation) — in progress.** See
+**Phase 0 (Foundation) — complete.** Astra + `gowonderlu-theme` active on
+the live site, HivePress core + Geolocation/Messages/Reviews active.
+Marketplace + Requests extensions deferred (premium hivepress.io add-ons —
+revisit once a phase needs them). See
 `docs/superpowers/specs/2026-06-23-phase-0-foundation-design.md` for the
 design and `docs/superpowers/plans/2026-06-23-phase-0-foundation-implementation.md`
 for the implementation plan.
