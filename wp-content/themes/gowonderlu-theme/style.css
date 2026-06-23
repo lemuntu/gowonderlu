@@ -6,3 +6,222 @@ Author: GoWonderlu
 Template: astra
 Version: 0.1.0
 */
+
+:root {
+	--gw-navy: #0B1F3A;
+	--gw-amber: #F5A623;
+	--gw-white: #FFFFFF;
+	--gw-mist: #F7F8FA;
+	--gw-ink: #1A1A1A;
+	--gw-slate: #5B6472;
+}
+
+.gw-hero {
+	position: relative;
+	background: var(--gw-navy);
+	overflow: hidden;
+}
+
+.gw-hero-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	position: relative;
+}
+
+.gw-hero-grid::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	width: 6px;
+	background: var(--gw-amber);
+	transform: skewX(-8deg) translateX(-50%);
+}
+
+.gw-hero-panel {
+	padding: 88px 64px;
+	color: var(--gw-white);
+}
+
+.gw-hero-panel.gw-customers {
+	padding-right: 80px;
+}
+
+.gw-hero-panel.gw-drivers {
+	padding-left: 80px;
+}
+
+.gw-eyebrow {
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 13px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--gw-amber);
+	font-weight: 500;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.gw-hero-panel h1 {
+	font-family: 'Big Shoulders Display', sans-serif;
+	font-weight: 800;
+	font-size: 42px;
+	line-height: 1.05;
+	margin: 0 0 18px;
+}
+
+.gw-hero-panel p {
+	color: #cfd6e4;
+	font-size: 16px;
+	line-height: 1.6;
+	max-width: 380px;
+	margin: 0 0 28px;
+}
+
+.gw-btn {
+	display: inline-block;
+	font-family: 'Inter', sans-serif;
+	font-weight: 600;
+	font-size: 15px;
+	padding: 14px 30px;
+	border-radius: 3px;
+	text-decoration: none;
+}
+
+.gw-btn-fill {
+	background: var(--gw-amber);
+	color: var(--gw-navy);
+}
+
+.gw-btn-outline {
+	background: transparent;
+	border: 2px solid var(--gw-amber);
+	color: var(--gw-amber);
+}
+
+.gw-btn:focus-visible {
+	outline: 3px solid var(--gw-white);
+	outline-offset: 2px;
+}
+
+.gw-how {
+	background: var(--gw-mist);
+	padding: 90px 48px;
+	text-align: center;
+}
+
+.gw-how h2,
+.gw-testimonials h2 {
+	font-family: 'Big Shoulders Display', sans-serif;
+	font-weight: 800;
+	font-size: 32px;
+	color: var(--gw-navy);
+	margin: 0 0 48px;
+}
+
+.gw-steps {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 40px;
+	max-width: 920px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.gw-step-number {
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 13px;
+	letter-spacing: 1px;
+	color: var(--gw-amber);
+}
+
+.gw-step h3 {
+	font-family: 'Big Shoulders Display', sans-serif;
+	font-weight: 800;
+	font-size: 22px;
+	color: var(--gw-navy);
+	margin: 8px 0 10px;
+}
+
+.gw-step p {
+	color: var(--gw-slate);
+	font-size: 15px;
+	line-height: 1.55;
+	margin: 0;
+}
+
+.gw-testimonials {
+	padding: 90px 48px;
+	background: var(--gw-white);
+	text-align: center;
+}
+
+.gw-quotes {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 28px;
+	max-width: 1040px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.gw-quote {
+	background: var(--gw-mist);
+	padding: 28px;
+	border-radius: 4px;
+	position: relative;
+}
+
+.gw-quote::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 34px;
+	height: 4px;
+	background: var(--gw-amber);
+	transform: skewX(-20deg);
+}
+
+.gw-quote p {
+	font-size: 15px;
+	line-height: 1.6;
+	color: var(--gw-ink);
+	margin: 0 0 16px;
+}
+
+.gw-quote .gw-attr {
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 12px;
+	letter-spacing: .5px;
+	color: var(--gw-slate);
+}
+
+.gw-signup-btn a {
+	background: var(--gw-amber) !important;
+	color: var(--gw-navy) !important;
+	padding: 8px 18px !important;
+	border-radius: 3px !important;
+	font-weight: 600 !important;
+}
+
+@media (max-width: 768px) {
+	.gw-hero-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.gw-hero-grid::before {
+		display: none;
+	}
+
+	.gw-hero-panel.gw-customers,
+	.gw-hero-panel.gw-drivers {
+		padding: 48px 28px;
+	}
+
+	.gw-steps,
+	.gw-quotes {
+		grid-template-columns: 1fr;
+	}
+}
