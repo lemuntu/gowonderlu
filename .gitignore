@@ -34,3 +34,6 @@ debug.log
 *.bak
 *.backup
 *.swp
+
+# Visual brainstorming companion scratch files
+.superpowers/
