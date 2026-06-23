@@ -61,23 +61,27 @@ gowonderlu/
 
 ## Deployment Workflow
 
-This hosting plan has no SSH (unlike honeyindex's), so deploy uses
-Hostinger's **GIT** panel (Websites → gowonderlu.com → Advanced → GIT →
-"Deploy from GitHub", OAuth-connected to `lemuntu/gowonderlu`):
+No CI/CD:
 
 1. Edit files locally in VS Code (Claude Code assists).
-2. Commit + push to GitHub.
-3. Hostinger auto-deploys the pushed files to the configured target
-   directory on the live site — no manual File Manager copying.
+2. Commit + push to GitHub (history/backup, not auto-deploy).
+3. Manually copy the new/changed files into Hostinger's File Manager at
+   the matching `wp-content/themes/...` or `wp-content/plugins/...` path
+   (browser upload — this plan has no SSH, unlike honeyindex's).
 
 ### Critical rules
 
-1. **Never edit production files directly** — always edit locally and push.
+1. **Never edit production files directly** — always edit locally and copy up.
 2. **Plugin settings don't sync via Git.** API keys, configuration — set in
    WP Admin manually.
 3. **Database doesn't sync.** Posts, users, settings stay where created.
 4. **Third-party plugins/themes (Astra, HivePress) aren't in this repo** —
    installed and managed via WP Admin, not deployed via Git.
+5. **Never connect Hostinger's GIT "Deploy from GitHub" auto-deploy tool to
+   this repo.** It does a destructive mirror sync that deletes anything not
+   tracked in git — it wiped the live WordPress install once already during
+   Phase 0 (`wp-admin/`, `wp-includes/`, `wp-config.php` are intentionally
+   gitignored, so a mirror sync removes them). Manual File Manager copy only.
 
 ---
 
@@ -116,7 +120,7 @@ for the implementation plan.
 | No AI attribution in commits or code | Owner preference, matches honeyindex convention |
 | Astra + child theme (not a fully custom theme) | Faster to ship, proven pattern from honeyindex |
 | HivePress for marketplace core | Avoids building request/listing/messaging plumbing from scratch |
-| Deploy via Hostinger's GitHub auto-deploy (GIT panel), not manual File Manager copy | This plan has no SSH, unlike honeyindex's; auto-deploy on push is the closest available equivalent |
+| Manual deploy via Hostinger File Manager (no CI/CD) | Matches honeyindex's convention; Hostinger's GitHub auto-deploy was tried and abandoned after it wiped the live WP install (destructive mirror sync) |
 | Navy + amber palette | Reads "trustworthy logistics network" — distinct from Lugg (orange/black) and GoShare (blue/green) |
 
 ---

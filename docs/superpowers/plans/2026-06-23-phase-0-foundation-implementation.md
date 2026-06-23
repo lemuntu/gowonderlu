@@ -12,7 +12,7 @@
 
 - No AI attribution anywhere: no "Co-Authored-By" lines, no AI mentions in commit messages, comments, or code.
 - Repo: `lemuntu/gowonderlu`, **private**, remote `git@github.com:lemuntu/gowonderlu.git` (SSH, matches honeyindex convention).
-- Deploy is git push to GitHub → Hostinger's GIT panel (OAuth-connected to `lemuntu/gowonderlu`) auto-deploys to the live site. This hosting plan has no SSH (unlike honeyindex's), so this replaces the manual File Manager copy step honeyindex uses.
+- Deploy is git push to GitHub (history/backup only) + manual copy into Hostinger's File Manager via browser upload (no SSH on this plan, unlike honeyindex's). Hostinger's GitHub auto-deploy tool must never be connected to this repo — it does a destructive mirror sync and wiped the live WP install once already during Phase 0.
 - Brand palette: navy `#0B1F3A` (primary), amber/gold `#F5A623` (accent) — fixed, do not substitute other hexes.
 - Out of scope for Phase 0: signup flow, deal posting, payments, notifications, matching logic, visual page templates. Do not add any of these.
 - `.gitignore` must exclude `wp-config.php`, `wp-content/uploads/`, cache directories, and `.DS_Store`.
@@ -518,82 +518,59 @@ git commit -m "Add CLAUDE.md project reference"
 
 ---
 
-### Task 8: GitHub remote, push, and Hostinger auto-deploy connection
+### Task 8: GitHub remote + push
 
-**Files:** none (git config + network operation + Hostinger panel config only).
+**Files:** none (git config + network operation only).
 
 **Interfaces:**
 - Consumes: all commits from Tasks 1–7.
-- Produces: a pushed `main` branch on `github.com/lemuntu/gowonderlu` (private), connected to Hostinger's GIT auto-deploy so Task 9 doesn't need a manual file upload.
+- Produces: a pushed `master` branch on `github.com/lemuntu/gowonderlu` (private).
 
-- [ ] **Step 1: User creates the empty repo (manual, blocking)**
+**Status: done.** Completed as follows (recorded here for the record —
+the repo's actual default branch is `master`, not `main`, since it predates
+that naming convention; this superseded the plan's original `main`
+references):
 
-No `gh` CLI is available in this environment. Ask the user to create an
-empty **private** repository named `gowonderlu` under the `lemuntu` GitHub
-account at github.com, with no README/license/gitignore (this repo already
-has all of those locally — initializing remotely would create a conflicting
-history). Wait for confirmation before continuing.
-
-- [ ] **Step 2: Add the remote**
-
-```bash
-git remote add origin git@github.com:lemuntu/gowonderlu.git
-```
-
-- [ ] **Step 3: Verify the remote**
-
-Run: `git remote -v`
-Expected: `origin git@github.com:lemuntu/gowonderlu.git (fetch)` and `(push)`.
-
-- [ ] **Step 4: Push (confirm with user first — this is a one-way, externally-visible action)**
-
-```bash
-git push -u origin main
-```
-
-Expected: push succeeds, branch `main` now tracks `origin/main`.
-
-- [ ] **Step 5: Verify**
-
-Run: `git status`
-Expected: `Your branch is up to date with 'origin/main'.`
-
-- [ ] **Step 6: User connects Hostinger's GIT panel (manual, blocking)**
-
-In Hostinger: Websites → gowonderlu.com → Advanced → GIT → "Continue with
-GitHub", authorize, select the `lemuntu/gowonderlu` repo and the `main`
-branch. When it asks for a target/install directory, point it at the
-WordPress install root (the same directory that already contains
-`wp-config.php` and `wp-admin/`) — **not** a subdirectory — so this repo's
-`wp-content/themes/...` lands at the real `wp-content/themes/...` path
-rather than nested one level too deep. Report back what directory field(s)
-the UI actually asks for before confirming, since the exact wording isn't
-known ahead of time.
-
-- [ ] **Step 7: Verify the first auto-deploy**
-
-After connecting, trigger a deploy (or push a no-op commit if it doesn't
-auto-trigger on connect) and confirm via Hostinger's File Manager that
-`wp-content/themes/gowonderlu-theme/style.css` now exists on the live
-filesystem at the correct path.
+- [x] User created the empty private repo at `github.com/lemuntu/gowonderlu`.
+- [x] `git remote add origin git@github.com:lemuntu/gowonderlu.git`
+- [x] `git push -u origin master` — succeeded, SSH auth already worked
+  under the `lemuntu` GitHub account, no credentials needed.
+- [x] An attempt was made to also connect Hostinger's GIT "Deploy from
+  GitHub" auto-deploy tool, targeting the WordPress install root
+  (`public_html`). **This was a mistake:** the tool does a destructive
+  mirror sync, which deleted everything in `public_html` not tracked in
+  this repo — `wp-admin/`, `wp-includes/`, `wp-config.php`, the root
+  `index.php`, `.htaccess` — since those are intentionally gitignored.
+  The live site returned a Hostinger-branded 403/404 instead of WordPress.
+  Recovery: disconnected the GitHub integration via the GIT panel's `⋮` →
+  "Disconnect from repository" menu, then reinstalled WordPress fresh via
+  Hostinger's WordPress installer (safe because Phase 0 had no real data —
+  no signups, no posts, Task 9 hadn't run yet). User confirmed wp-admin
+  login works again post-reinstall.
+- [x] Decision: Hostinger's GitHub auto-deploy must never be reconnected to
+  this repo. Task 9 uses manual File Manager upload instead, per the
+  original spec. `CLAUDE.md` and the design spec were updated to document
+  this as a hard rule, not just a preference.
 
 ---
 
 ### Task 9: Live WordPress base setup (manual — present as a checklist, do not attempt to automate)
 
 No browser/admin-automation tool is available in this environment, so this
-task is performed by the user in wp-admin. Present it as a checklist and
-wait for the user to confirm each step rather than attempting to script it.
-The child theme's files arrive via Task 8's auto-deploy, not a manual
-upload — this task only covers WP Admin actions.
+task is performed by the user in wp-admin and Hostinger's File Manager.
+Present it as a checklist and wait for the user to confirm each step
+rather than attempting to script it.
 
 **Checklist:**
 
-- [ ] Confirm the fresh WordPress install is reachable and admin login works.
+- [x] Confirm the fresh WordPress install is reachable and admin login
+  works. (Reconfirmed after the Task 8 reinstall.)
 - [ ] Install + activate **Astra** (parent theme) from the WP Admin theme
   directory.
-- [ ] Confirm `gowonderlu-theme` appears under Appearance → Themes (deployed
-  by Task 8), then activate it as the active (child) theme.
+- [ ] Upload `wp-content/themes/gowonderlu-theme/` (via Hostinger File
+  Manager's browser upload — no SSH on this plan) to the live
+  `wp-content/themes/` directory, then activate it as the active (child)
+  theme.
 - [ ] Install + activate the **HivePress** core plugin.
 - [ ] Install + activate HivePress extensions: **Geolocation**, **Requests**,
   **Marketplace**, **Messages**, **Reviews**.
