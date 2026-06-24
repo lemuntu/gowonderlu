@@ -350,3 +350,60 @@ function gowonderlu_save_deal_assign_meta_box( $post_id ) {
 	);
 	add_action( 'save_post_gw_deal', 'gowonderlu_save_deal_assign_meta_box' );
 }
+
+add_action( 'transition_post_status', 'gowonderlu_notify_on_deal_status_change', 10, 3 );
+
+function gowonderlu_notify_on_deal_status_change( $new_status, $old_status, $post ) {
+	if ( 'gw_deal' !== $post->post_type || $new_status === $old_status ) {
+		return;
+	}
+
+	$customer = get_userdata( $post->post_author );
+
+	if ( ! $customer ) {
+		return;
+	}
+
+	if ( 'pending' === $old_status && 'publish' === $new_status ) {
+		wp_mail(
+			$customer->user_email,
+			'Your GoWonderlu deal is now live',
+			sprintf(
+				"Hi %s,\n\nYour deal \"%s\" has been approved and is now visible to drivers.\n\nCheck your dashboard: %s",
+				$customer->display_name,
+				$post->post_title,
+				home_url( '/dashboard/' )
+			)
+		);
+	}
+
+	if ( 'gw_assigned' === $new_status && 'gw_assigned' !== $old_status ) {
+		$driver_id = (int) get_post_meta( $post->ID, GW_DEAL_META_DRIVER_ID, true );
+		$driver    = $driver_id ? get_userdata( $driver_id ) : false;
+
+		wp_mail(
+			$customer->user_email,
+			'A driver has been assigned to your deal',
+			sprintf(
+				"Hi %s,\n\n%s has been assigned to your deal \"%s\". Check your dashboard to coordinate.\n\n%s",
+				$customer->display_name,
+				$driver ? $driver->display_name : 'A driver',
+				$post->post_title,
+				home_url( '/dashboard/' )
+			)
+		);
+
+		if ( $driver ) {
+			wp_mail(
+				$driver->user_email,
+				'You have a new GoWonderlu job',
+				sprintf(
+					"Hi %s,\n\nYou've been assigned to a new job: \"%s\". Check your dashboard for details.\n\n%s",
+					$driver->display_name,
+					$post->post_title,
+					home_url( '/dashboard/' )
+				)
+			);
+		}
+	}
+}
