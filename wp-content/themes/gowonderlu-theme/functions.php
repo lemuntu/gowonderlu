@@ -53,3 +53,37 @@ function gowonderlu_auto_open_register() {
 	<?php
 }
 
+add_action( 'wp_enqueue_scripts', 'gowonderlu_enqueue_places_autocomplete' );
+
+function gowonderlu_enqueue_places_autocomplete() {
+	if ( ! is_page_template( 'post-a-deal.php' ) ) {
+		return;
+	}
+
+	$api_key = get_option( 'hp_geolocation_google_maps_api_key' );
+
+	if ( ! $api_key ) {
+		return;
+	}
+
+	wp_enqueue_script(
+		'gowonderlu-places',
+		'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $api_key ) . '&libraries=places',
+		array(),
+		null,
+		true
+	);
+
+	wp_add_inline_script(
+		'gowonderlu-places',
+		"window.addEventListener('load', function () {
+			['gw_deal_pickup', 'gw_deal_dropoff'].forEach(function (id) {
+				var input = document.getElementById(id);
+				if (input && window.google) {
+					new google.maps.places.Autocomplete(input, { componentRestrictions: { country: 'us' } });
+				}
+			});
+		});"
+	);
+}
+
