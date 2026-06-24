@@ -27,7 +27,7 @@ Owner: Christian Kakoba (GitHub: `lemuntu`, email: `kryskaka@gmail.com`)
 | Child theme | `gowonderlu-theme` (in repo at `wp-content/themes/gowonderlu-theme/`) |
 | Marketplace engine | HivePress core + Geolocation, Messages, Reviews extensions (live). Marketplace + Requests extensions are premium hivepress.io add-ons, not in the free WP.org directory — deferred, revisit when a phase actually needs them and the cost is justified |
 | Custom plugins | PHP files in `wp-content/plugins/gowonderlu-*` — `gowonderlu-user-fields.php` adds a Phone Number field to registration/account-settings (Phase 1) |
-| Geolocation API | None configured yet — HivePress Geolocation needs a Google Maps or Mapbox API key (Settings → Integrations) before the Location field on forms works. Without it, the field is non-functional (not just unstyled) — blocks listing submission. Needed for Phase 2 |
+| Geolocation API | Google Maps Places API key — set up as part of Phase 2 for address autocomplete on the deal-posting form (not yet entered in HivePress Settings → Integrations; owner action, see Phase 2 status below) |
 | Payments | Stripe Connect (Phase 3 — not yet configured) |
 | Notifications | Email + SMS (Phase 4 — not yet configured) |
 | Local dev | VS Code on macOS, project at `~/codingproject2026/gowonderlu/` |
@@ -187,6 +187,55 @@ replaced after live review. See
   also crash Customizer JS independently of the above — another reason
   to verify in Incognito first rather than deactivating plugins blind.
 
+**Phase 2 (Deals Marketplace) — code complete, pending live verification.**
+Customers post deals (pickup/dropoff, date window, item description +
+photos, offer price, city) via a new `gw_deal` custom post type and a
+`/post-a-deal/` form; admin reviews and approves (Pending → Open, same
+moderation pattern as Phase 1 Listings); drivers self-claim Open deals
+in their city from `/dashboard/`, or admin hand-assigns from a meta box
+on the deal's edit screen. Dashboard shows role-appropriate sections
+(My Deals for everyone; Available Deals/My Jobs only for users who've
+completed a driver profile). Plain email notifications fire on
+approval and assignment. Messaging and reviews are intended to reuse
+the already-active HivePress Messages/Reviews extensions, but the exact
+integration was deferred (see gotchas below) — currently the dashboard
+links to HivePress's general `/account/messages/` and `/account/reviews/`
+pages rather than a deal-specific thread/review form. Payments are
+explicitly out of scope (Phase 3). Built via
+`docs/superpowers/specs/2026-06-24-phase-2-deals-marketplace-design.md`
+and `docs/superpowers/plans/2026-06-24-phase-2-deals-marketplace-implementation.md`
+using subagent-driven development — every task individually reviewed
+clean, but **none of it has been deployed or exercised against the live
+WordPress/HivePress install yet** (this sandbox has no live site
+access). Before considering Phase 2 actually done, the owner needs to:
+1. Upload all new/changed files (see the implementation plan's per-task
+   "Deploy and verify" steps for the exact list) via Hostinger File
+   Manager, activate the "GoWonderlu Deals" plugin, and create the
+   "Post a Deal" and "Dashboard" WP Pages with their respective
+   templates assigned.
+2. Set up a Google Cloud Maps API key and enter it in HivePress
+   Settings → Integrations (Task 10) — confirm the actual option name
+   HivePress stores it under matches `hp_geolocation_google_maps_api_key`
+   (a best guess; check by inspecting the saved option directly if
+   autocomplete doesn't appear on `/post-a-deal/`).
+3. Confirm the City field actually appears on the vendor profile-edit
+   form (Account → Settings while logged in as a vendor) — this depends
+   on `hivepress/v1/forms/vendor_update` being HivePress's real filter
+   name for that form, which was never verified against actual plugin
+   source (HivePress isn't in this repo). If the field doesn't appear,
+   find the real filter name in the installed plugin's code and fix
+   `gowonderlu-user-fields.php`.
+4. Walk through the full verification list in the Phase 2 spec
+   (registration → post deal → approve → claim → message → complete →
+   review → cancel → existing customer becomes driver → admin assign →
+   autocomplete) and fix anything broken.
+5. Once messaging/reviews are confirmed working through HivePress's
+   general account pages, decide whether the deal-specific linking
+   (Tasks 7/8 in the implementation plan) is worth a follow-up pass —
+   it was intentionally left unbuilt rather than guessed at, since a
+   wrong HivePress method-name guess risks a fatal PHP error on the
+   live site.
+
 ---
 
 ## Key Decisions (Do Not Reverse Without Discussion)
@@ -199,6 +248,8 @@ replaced after live review. See
 | Manual deploy via Hostinger File Manager (no CI/CD) | Matches honeyindex's convention; Hostinger's GitHub auto-deploy was tried and abandoned after it wiped the live WP install (destructive mirror sync) |
 | Navy + amber palette | Reads "trustworthy logistics network" — distinct from Lugg (orange/black) and GoShare (blue/green) |
 | Instrument Serif (italic, headlines) + DM Sans (body), soft surface backgrounds, hairline-bordered cards | Calm/editorial direction, explicitly chosen over an initial bold-industrial draft (condensed display type + diagonal "speed line" + solid color blocks) after live review — owner wanted something closer to honeyindex's restrained feel |
+| Custom `gw_deal` post type instead of HivePress's premium Requests extension | Full control, no added licensing cost, despite the extra build time — explicit decision after weighing both |
+| Single WP account for both roles; becoming a driver is a profile upgrade, not a separate signup | Matches how Uber/DoorDash/Turo let one account be both customer and provider — avoids forcing a second account on people who want both roles |
 
 ---
 
@@ -212,4 +263,4 @@ replaced after live review. See
 
 ---
 
-*Last updated: June 24, 2026. Update this file when architecture changes meaningfully.*
+*Last updated: June 24, 2026 (Phase 2 build). Update this file when architecture changes meaningfully.*
