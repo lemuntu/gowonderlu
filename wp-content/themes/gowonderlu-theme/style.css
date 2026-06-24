@@ -263,6 +263,8 @@ Version: 0.1.0
 	font-family: 'DM Sans', sans-serif;
 	font-size: 13.5px;
 	color: var(--gw-slate);
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .gw-footer-nav {
