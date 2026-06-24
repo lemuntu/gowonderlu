@@ -235,6 +235,15 @@ Version: 0.1.0
 	font-weight: 600 !important;
 }
 
+.gw-signin-btn a {
+	background: transparent !important;
+	border: 1.5px solid var(--gw-navy) !important;
+	color: var(--gw-navy) !important;
+	padding: 6.5px 18px !important;
+	border-radius: 6px !important;
+	font-weight: 600 !important;
+}
+
 @media (max-width: 768px) {
 	.gw-panels,
 	.gw-steps,
