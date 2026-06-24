@@ -239,6 +239,13 @@ Version: 0.1.0
 	font-weight: 600 !important;
 }
 
+/* WordPress adds .logged-in to <body> automatically for authenticated
+   users — hide the static Sign Up link once logged in, since HivePress's
+   own Account element already shows the user's name/dropdown instead. */
+.logged-in .gw-signup-btn {
+	display: none !important;
+}
+
 .gw-signin-btn {
 	margin-left: 10px !important;
 }
