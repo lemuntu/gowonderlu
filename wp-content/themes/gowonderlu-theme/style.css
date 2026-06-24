@@ -252,19 +252,100 @@ Version: 0.1.0
 }
 
 .gw-footer {
-	background: var(--gw-white);
-	border-top: 0.5px solid var(--gw-border);
-	padding: 28px 56px;
+	background: var(--gw-navy);
+	font-family: 'DM Sans', sans-serif;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.gw-footer-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 48px;
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 56px 56px 40px;
+}
+
+.gw-footer-logo {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 22px;
+	color: var(--gw-white);
+	margin-bottom: 10px;
+}
+
+.gw-footer-brand p {
+	color: #9aa6bb;
+	font-size: 14px;
+	margin: 0;
+	max-width: 240px;
+}
+
+.gw-footer-subscribe {
+	max-width: 360px;
+}
+
+.gw-footer-subscribe .gw-eyebrow {
+	color: var(--gw-amber);
+}
+
+.gw-footer-subscribe h3 {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 20px;
+	color: var(--gw-white);
+	margin: 0 0 16px;
+	font-weight: normal;
+}
+
+.gw-subscribe-form {
+	display: flex;
+	gap: 10px;
+}
+
+.gw-subscribe-form input {
+	flex: 1;
+	min-width: 0;
+	padding: 10px 14px;
+	border-radius: 6px;
+	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.06);
+	color: var(--gw-white);
+	font-family: 'DM Sans', sans-serif;
+	font-size: 14px;
+}
+
+.gw-subscribe-form input::placeholder {
+	color: #7c8aa3;
+}
+
+.gw-subscribe-form button {
+	background: var(--gw-amber);
+	color: var(--gw-navy);
+	border: none;
+	border-radius: 6px;
+	padding: 10px 18px;
+	font-family: 'DM Sans', sans-serif;
+	font-weight: 600;
+	font-size: 14px;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.gw-footer-bottom {
+	border-top: 0.5px solid rgba(255, 255, 255, 0.12);
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 22px 56px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
 	gap: 16px;
-	font-family: 'DM Sans', sans-serif;
-	font-size: 13.5px;
-	color: var(--gw-slate);
-	width: 100%;
-	box-sizing: border-box;
+	font-size: 13px;
+	color: #7c8aa3;
 }
 
 .gw-footer-nav {
@@ -274,12 +355,12 @@ Version: 0.1.0
 }
 
 .gw-footer-nav a {
-	color: var(--gw-slate);
+	color: #9aa6bb;
 	text-decoration: none;
 }
 
 .gw-footer-nav a:hover {
-	color: var(--gw-navy);
+	color: var(--gw-white);
 }
 
 .gw-about-block {
@@ -470,7 +551,20 @@ Version: 0.1.0
 		font-size: 38px;
 	}
 
-	.gw-footer {
+	.gw-footer-top {
+		flex-direction: column;
+		gap: 28px;
+	}
+
+	.gw-footer-brand p {
+		max-width: none;
+	}
+
+	.gw-footer-subscribe {
+		max-width: none;
+	}
+
+	.gw-footer-bottom {
 		flex-direction: column;
 		text-align: center;
 	}
