@@ -276,6 +276,18 @@ header .menu-item ul a:hover {
 	color: var(--gw-navy) !important;
 }
 
+/* Safety net for HivePress's own form/account page markup (login,
+   register, settings) — these inherit colors we don't control via our
+   gw- classes. Force a readable link color sitewide; our own buttons
+   all use !important and stay unaffected. */
+a {
+	color: var(--gw-navy);
+}
+
+a:hover {
+	color: var(--gw-amber);
+}
+
 .gw-signin-btn {
 	margin-left: 10px !important;
 }
