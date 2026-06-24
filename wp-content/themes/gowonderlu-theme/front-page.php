@@ -15,13 +15,21 @@ get_header();
 		<span class="gw-eyebrow">For customers</span>
 		<h2>Get it moved</h2>
 		<p>Find a vetted local driver — no truck rental, no hassle.</p>
-		<a href="<?php echo esc_url( home_url( '/account/login/?register=1' ) ); ?>" class="gw-btn gw-btn-fill">Get Started</a>
+		<?php if ( is_user_logged_in() ) : ?>
+			<a href="<?php echo esc_url( home_url( '/dashboard/' ) ); ?>" class="gw-btn gw-btn-fill">Post a Deal</a>
+		<?php else : ?>
+			<a href="<?php echo esc_url( home_url( '/account/login/?register=1' ) ); ?>" class="gw-btn gw-btn-fill">Get Started</a>
+		<?php endif; ?>
 	</div>
 	<div class="gw-panel">
 		<span class="gw-eyebrow">For drivers</span>
 		<h2>Earn on your schedule</h2>
 		<p>Set up your profile and start picking up jobs near you.</p>
-		<a href="<?php echo esc_url( home_url( '/register-vendor/' ) ); ?>" class="gw-btn gw-btn-outline">Become a Driver</a>
+		<?php if ( is_user_logged_in() && gowonderlu_user_is_driver( get_current_user_id() ) ) : ?>
+			<a href="<?php echo esc_url( home_url( '/dashboard/' ) ); ?>" class="gw-btn gw-btn-outline">Go to Driver Dashboard</a>
+		<?php else : ?>
+			<a href="<?php echo esc_url( home_url( '/register-vendor/' ) ); ?>" class="gw-btn gw-btn-outline">Become a Driver</a>
+		<?php endif; ?>
 	</div>
 </section>
 
