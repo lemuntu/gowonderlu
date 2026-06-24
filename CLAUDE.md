@@ -139,10 +139,53 @@ Customizer (amber accent, navy headings — no custom CSS needed). See
   have an inline options field — publish the attribute first, then an
   "Edit Options" taxonomy-term screen becomes available for entering the
   actual choice list.
-- The site's main navigation menu and homepage are still Astra's default
-  starter-template demo content (Home/Services/About/Reviews/Why
-  Us/Contact) — never wired to HivePress or GoWonderlu's real content.
-  This is real, deliberately-deferred work, not yet a phase.
+
+**Homepage & Site Shell — complete.** Real homepage (centered hero,
+two-panel customer/driver CTAs, How It Works, testimonials) replaces
+Astra's demo content; logo/favicon/nav menu configured; branded footer
+with a newsletter signup placeholder (not yet wired — Phase 7) shows on
+every page; About/Terms/Privacy pages live with clearly-flagged
+placeholder copy. The visual direction is calm and editorial (italic
+serif headlines, soft surface backgrounds, hairline-bordered cards) —
+the original bold-industrial direction (Big Shoulders Display + IBM
+Plex Mono + diagonal "speed line") was built first, then explicitly
+replaced after live review. See
+`docs/superpowers/specs/2026-06-23-homepage-site-shell-design.md` and
+`docs/superpowers/plans/2026-06-23-homepage-site-shell-implementation.md`.
+
+**Gotchas discovered during the Homepage & Site Shell phase (relevant to future phases):**
+- Astra's `.ast-container` (the div wrapping all page content) is
+  `display: flex`. Any custom template (`front-page.php`, `about.php`,
+  etc.) that outputs multiple top-level `<section>` tags needs them
+  wrapped in one `.gw-page` div with `display: block; width: 100%;` —
+  otherwise the sections lay out as flex columns side-by-side instead of
+  stacking.
+- A custom `footer.php` must explicitly close the `#content` and
+  `.ast-container` divs that Astra's `header.php` opens before outputting
+  its own `<footer>` markup, or the footer ends up nested inside that
+  flex container instead of sitting below it as a sibling (same visual
+  symptom as the bug above, different root cause).
+- Astra's Site Identity → Logo "Logo Width" field applies literally —
+  if left blank, the logo renders at `0×0`. Always set an explicit pixel
+  value. Relatedly, an SVG logo with only a `viewBox` (no `width`/`height`
+  attributes) has no intrinsic size, so it depends entirely on that field.
+- The header background color is controlled by the **first swatch** in
+  Customizer → Colors → Global Palette (CSS var `--ast-global-color-0`),
+  **not** the "Theme Color → Accent" field — they're separate mappings.
+  Astra ships with a generic blue/magenta "Default" palette that was
+  never updated to the brand colors; check this on any new Astra install.
+- Astra's free-tier Footer Builder only offers a Copyright element — no
+  menu/nav widget — so a footer with links requires a `footer.php`
+  override (see above), not the Footer Builder.
+- A misbehaving browser extension (confirmed: one injecting scripts on
+  every page) can break the wp-admin Customizer's JS entirely (panels
+  fail to render, controls go blank) in a way that looks identical to a
+  plugin conflict. Always test flaky Customizer behavior in an
+  Incognito/Private window before chasing it through WordPress plugins.
+- HivePress and Hostinger's bundled plugins (Hostinger Reach, etc.) were
+  both observed loading frontend script bundles into wp-admin, which can
+  also crash Customizer JS independently of the above — another reason
+  to verify in Incognito first rather than deactivating plugins blind.
 
 ---
 
@@ -155,6 +198,7 @@ Customizer (amber accent, navy headings — no custom CSS needed). See
 | HivePress for marketplace core | Avoids building request/listing/messaging plumbing from scratch |
 | Manual deploy via Hostinger File Manager (no CI/CD) | Matches honeyindex's convention; Hostinger's GitHub auto-deploy was tried and abandoned after it wiped the live WP install (destructive mirror sync) |
 | Navy + amber palette | Reads "trustworthy logistics network" — distinct from Lugg (orange/black) and GoShare (blue/green) |
+| Instrument Serif (italic, headlines) + DM Sans (body), soft surface backgrounds, hairline-bordered cards | Calm/editorial direction, explicitly chosen over an initial bold-industrial draft (condensed display type + diagonal "speed line" + solid color blocks) after live review — owner wanted something closer to honeyindex's restrained feel |
 
 ---
 
@@ -168,4 +212,4 @@ Customizer (amber accent, navy headings — no custom CSS needed). See
 
 ---
 
-*Last updated: June 23, 2026. Update this file when architecture changes meaningfully.*
+*Last updated: June 24, 2026. Update this file when architecture changes meaningfully.*
