@@ -31,3 +31,25 @@ function gowonderlu_allow_svg_upload( $mimes ) {
 
 	return $mimes;
 }
+
+add_action( 'wp_footer', 'gowonderlu_auto_open_register' );
+
+function gowonderlu_auto_open_register() {
+	if ( empty( $_GET['register'] ) ) {
+		return;
+	}
+	?>
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		var links = document.querySelectorAll('a');
+		for (var i = 0; i < links.length; i++) {
+			if (links[i].textContent.trim() === 'Register') {
+				links[i].click();
+				break;
+			}
+		}
+	});
+	</script>
+	<?php
+}
+

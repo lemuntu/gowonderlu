@@ -15,7 +15,7 @@ get_header();
 		<span class="gw-eyebrow">For customers</span>
 		<h2>Get it moved</h2>
 		<p>Find a vetted local driver — no truck rental, no hassle.</p>
-		<a href="<?php echo esc_url( home_url( '/register/' ) ); ?>" class="gw-btn gw-btn-fill">Get Started</a>
+		<a href="<?php echo esc_url( home_url( '/account/login/?register=1' ) ); ?>" class="gw-btn gw-btn-fill">Get Started</a>
 	</div>
 	<div class="gw-panel">
 		<span class="gw-eyebrow">For drivers</span>
