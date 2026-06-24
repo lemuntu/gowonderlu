@@ -217,14 +217,18 @@ function gowonderlu_claim_deal( $deal_id, $driver_user_id ) {
 		return false;
 	}
 
+	if ( ! gowonderlu_user_is_driver( $driver_user_id ) ) {
+		return false;
+	}
+
+	update_post_meta( $deal_id, GW_DEAL_META_DRIVER_ID, $driver_user_id );
+
 	wp_update_post(
 		array(
 			'ID'          => $deal_id,
 			'post_status' => 'gw_assigned',
 		)
 	);
-
-	update_post_meta( $deal_id, GW_DEAL_META_DRIVER_ID, $driver_user_id );
 
 	return true;
 }
