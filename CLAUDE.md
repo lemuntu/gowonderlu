@@ -228,8 +228,19 @@ access). Before considering Phase 2 actually done, the owner needs to:
 4. Walk through the full verification list in the Phase 2 spec
    (registration → post deal → approve → claim → message → complete →
    review → cancel → existing customer becomes driver → admin assign →
-   autocomplete) and fix anything broken.
-5. Once messaging/reviews are confirmed working through HivePress's
+   autocomplete) and fix anything broken. **Specifically test the
+   self-claim path's emails** (driver claims an Open deal from their own
+   dashboard, not admin-assigned) — a final-review pass caught and fixed
+   a bug where claiming wrote the deal's status before its driver-ID
+   meta, so the assignment emails fired with no driver name and the
+   driver got no email at all. Fixed by reordering those two writes plus
+   adding a driver-role check on the claim handler (`gowonderlu_claim_deal()`
+   in `gowonderlu-deals.php`), but this exact path needs a real
+   live-email test since it could only be reasoned about statically.
+5. After activating the plugin and creating the new pages, flush
+   permalinks (Settings → Permalinks → Save Changes) — same Phase 1
+   gotcha applies to the new `gw_deal` post type and form handlers.
+6. Once messaging/reviews are confirmed working through HivePress's
    general account pages, decide whether the deal-specific linking
    (Tasks 7/8 in the implementation plan) is worth a follow-up pass —
    it was intentionally left unbuilt rather than guessed at, since a
