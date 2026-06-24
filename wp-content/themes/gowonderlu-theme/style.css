@@ -251,6 +251,35 @@ Version: 0.1.0
 	font-weight: 500 !important;
 }
 
+.gw-footer {
+	background: var(--gw-white);
+	border-top: 0.5px solid var(--gw-border);
+	padding: 28px 56px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 16px;
+	font-family: 'DM Sans', sans-serif;
+	font-size: 13.5px;
+	color: var(--gw-slate);
+}
+
+.gw-footer-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 22px;
+}
+
+.gw-footer-nav a {
+	color: var(--gw-slate);
+	text-decoration: none;
+}
+
+.gw-footer-nav a:hover {
+	color: var(--gw-navy);
+}
+
 @media (max-width: 768px) {
 	.gw-panels,
 	.gw-steps,
@@ -260,5 +289,10 @@ Version: 0.1.0
 
 	.gw-hero h1 {
 		font-size: 38px;
+	}
+
+	.gw-footer {
+		flex-direction: column;
+		text-align: center;
 	}
 }
