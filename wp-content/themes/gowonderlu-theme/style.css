@@ -229,6 +229,9 @@ Version: 0.1.0
 
 .gw-signup-btn {
 	margin-left: 18px !important;
+	align-self: center !important;
+	display: flex !important;
+	align-items: center !important;
 }
 
 .gw-signup-btn a {
@@ -237,6 +240,7 @@ Version: 0.1.0
 	padding: 8px 18px !important;
 	border-radius: 6px !important;
 	font-weight: 600 !important;
+	line-height: 1.2 !important;
 }
 
 /* WordPress adds .logged-in to <body> automatically for authenticated
@@ -244,6 +248,32 @@ Version: 0.1.0
    own Account element already shows the user's name/dropdown instead. */
 .logged-in .gw-signup-btn {
 	display: none !important;
+}
+
+/* HivePress's Account dropdown (Settings/Sign Out) was rendering with
+   invisible white-on-white text outside of :hover. Force a readable,
+   on-brand dropdown regardless of which exact menu markup HivePress uses. */
+header .sub-menu,
+header .menu-item ul {
+	background: var(--gw-white) !important;
+	border: 0.5px solid var(--gw-border) !important;
+	border-radius: 8px !important;
+	box-shadow: 0 8px 24px rgba(11, 31, 58, 0.12) !important;
+	padding: 6px !important;
+}
+
+header .sub-menu a,
+header .menu-item ul a {
+	color: var(--gw-navy) !important;
+	font-weight: 500 !important;
+	padding: 8px 14px !important;
+	border-radius: 6px !important;
+}
+
+header .sub-menu a:hover,
+header .menu-item ul a:hover {
+	background: var(--gw-surface) !important;
+	color: var(--gw-navy) !important;
 }
 
 .gw-signin-btn {
