@@ -110,3 +110,73 @@ function gowonderlu_seed_deal_cities() {
 		}
 	}
 }
+
+add_action( 'template_redirect', 'gowonderlu_handle_deal_submission' );
+
+function gowonderlu_handle_deal_submission() {
+	if ( empty( $_POST['gowonderlu_post_deal_nonce'] ) || ! wp_verify_nonce( $_POST['gowonderlu_post_deal_nonce'], 'gowonderlu_post_deal' ) ) {
+		return;
+	}
+
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	$title       = sanitize_text_field( wp_unslash( $_POST['gw_deal_title'] ?? '' ) );
+	$description = sanitize_textarea_field( wp_unslash( $_POST['gw_deal_description'] ?? '' ) );
+	$pickup      = sanitize_text_field( wp_unslash( $_POST['gw_deal_pickup'] ?? '' ) );
+	$dropoff     = sanitize_text_field( wp_unslash( $_POST['gw_deal_dropoff'] ?? '' ) );
+	$city_id     = absint( $_POST['gw_deal_city'] ?? 0 );
+	$date_window = sanitize_text_field( wp_unslash( $_POST['gw_deal_date_window'] ?? '' ) );
+	$price       = absint( $_POST['gw_deal_price'] ?? 0 );
+
+	if ( ! $title || ! $description || ! $pickup || ! $dropoff || ! $city_id || ! $date_window || ! $price ) {
+		return;
+	}
+
+	$deal_id = wp_insert_post(
+		array(
+			'post_type'    => 'gw_deal',
+			'post_title'   => $title,
+			'post_content' => $description,
+			'post_status'  => 'pending',
+			'post_author'  => get_current_user_id(),
+		)
+	);
+
+	if ( is_wp_error( $deal_id ) || ! $deal_id ) {
+		return;
+	}
+
+	wp_set_post_terms( $deal_id, array( $city_id ), 'gw_deal_city' );
+	update_post_meta( $deal_id, GW_DEAL_META_PICKUP, $pickup );
+	update_post_meta( $deal_id, GW_DEAL_META_DROPOFF, $dropoff );
+	update_post_meta( $deal_id, GW_DEAL_META_DATE_WINDOW, $date_window );
+	update_post_meta( $deal_id, GW_DEAL_META_PRICE, $price );
+
+	if ( ! empty( $_FILES['gw_deal_photos']['name'][0] ) ) {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		require_once ABSPATH . 'wp-admin/includes/media.php';
+
+		foreach ( $_FILES['gw_deal_photos']['name'] as $i => $name ) {
+			if ( empty( $name ) ) {
+				continue;
+			}
+
+			media_handle_sideload(
+				array(
+					'name'     => $_FILES['gw_deal_photos']['name'][ $i ],
+					'type'     => $_FILES['gw_deal_photos']['type'][ $i ],
+					'tmp_name' => $_FILES['gw_deal_photos']['tmp_name'][ $i ],
+					'error'    => $_FILES['gw_deal_photos']['error'][ $i ],
+					'size'     => $_FILES['gw_deal_photos']['size'][ $i ],
+				),
+				$deal_id
+			);
+		}
+	}
+
+	wp_safe_redirect( add_query_arg( 'posted', '1', wp_get_referer() ? wp_get_referer() : home_url( '/post-a-deal/' ) ) );
+	exit;
+}
