@@ -63,7 +63,7 @@ Version: 0.1.0
 }
 
 .gw-hero {
-	padding: 100px 56px 90px;
+	padding: 64px 56px 48px;
 	text-align: center;
 	max-width: 760px;
 	margin: 0 auto;
@@ -94,7 +94,7 @@ Version: 0.1.0
 	grid-template-columns: 1fr 1fr;
 	gap: 24px;
 	max-width: 920px;
-	margin: 0 auto 90px;
+	margin: 0 auto 56px;
 	padding: 0 56px;
 }
 
@@ -128,7 +128,7 @@ Version: 0.1.0
 }
 
 .gw-how {
-	padding: 80px 56px;
+	padding: 56px 56px;
 	text-align: center;
 	background: var(--gw-white);
 	border-top: 0.5px solid var(--gw-border);
@@ -146,7 +146,7 @@ Version: 0.1.0
 	font-style: italic;
 	font-size: 34px;
 	color: var(--gw-navy);
-	margin: 0 0 50px;
+	margin: 0 0 36px;
 }
 
 .gw-steps {
@@ -189,7 +189,7 @@ Version: 0.1.0
 }
 
 .gw-testimonials {
-	padding: 90px 56px;
+	padding: 56px 56px 64px;
 	background: var(--gw-surface);
 	text-align: center;
 }
@@ -227,6 +227,10 @@ Version: 0.1.0
 	color: var(--gw-slate);
 }
 
+.gw-signup-btn {
+	margin-left: 18px !important;
+}
+
 .gw-signup-btn a {
 	background: var(--gw-amber) !important;
 	color: var(--gw-navy) !important;
@@ -235,13 +239,16 @@ Version: 0.1.0
 	font-weight: 600 !important;
 }
 
+.gw-signin-btn {
+	margin-left: 10px !important;
+}
+
 .gw-signin-btn a {
 	background: transparent !important;
-	border: 1.5px solid var(--gw-navy) !important;
-	color: var(--gw-navy) !important;
-	padding: 6.5px 18px !important;
-	border-radius: 6px !important;
-	font-weight: 600 !important;
+	border: none !important;
+	padding: 8px 4px !important;
+	color: var(--gw-slate) !important;
+	font-weight: 500 !important;
 }
 
 @media (max-width: 768px) {
