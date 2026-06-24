@@ -180,3 +180,173 @@ function gowonderlu_handle_deal_submission() {
 	wp_safe_redirect( add_query_arg( 'posted', '1', wp_get_referer() ? wp_get_referer() : home_url( '/post-a-deal/' ) ) );
 	exit;
 }
+
+add_action( 'template_redirect', 'gowonderlu_handle_deal_actions' );
+
+function gowonderlu_handle_deal_actions() {
+	if ( empty( $_POST['gw_deal_action'] ) || empty( $_POST['deal_id'] ) ) {
+		return;
+	}
+
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	check_admin_referer( 'gw_deal_action', 'gw_deal_nonce' );
+
+	$deal_id = absint( $_POST['deal_id'] );
+	$action  = sanitize_key( $_POST['gw_deal_action'] );
+	$user_id = get_current_user_id();
+
+	if ( 'claim' === $action ) {
+		gowonderlu_claim_deal( $deal_id, $user_id );
+	} elseif ( 'complete' === $action ) {
+		gowonderlu_complete_deal( $deal_id, $user_id );
+	} elseif ( 'cancel' === $action ) {
+		gowonderlu_cancel_deal( $deal_id, $user_id );
+	}
+
+	wp_safe_redirect( wp_get_referer() ? wp_get_referer() : home_url( '/dashboard/' ) );
+	exit;
+}
+
+function gowonderlu_claim_deal( $deal_id, $driver_user_id ) {
+	$deal = get_post( $deal_id );
+
+	if ( ! $deal || 'gw_deal' !== $deal->post_type || 'publish' !== $deal->post_status ) {
+		return false;
+	}
+
+	wp_update_post(
+		array(
+			'ID'          => $deal_id,
+			'post_status' => 'gw_assigned',
+		)
+	);
+
+	update_post_meta( $deal_id, GW_DEAL_META_DRIVER_ID, $driver_user_id );
+
+	return true;
+}
+
+function gowonderlu_complete_deal( $deal_id, $user_id ) {
+	$deal      = get_post( $deal_id );
+	$driver_id = (int) get_post_meta( $deal_id, GW_DEAL_META_DRIVER_ID, true );
+
+	if ( ! $deal || 'gw_deal' !== $deal->post_type || 'gw_assigned' !== $deal->post_status ) {
+		return false;
+	}
+
+	if ( $driver_id !== (int) $user_id ) {
+		return false;
+	}
+
+	wp_update_post(
+		array(
+			'ID'          => $deal_id,
+			'post_status' => 'gw_completed',
+		)
+	);
+
+	return true;
+}
+
+function gowonderlu_cancel_deal( $deal_id, $user_id ) {
+	$deal      = get_post( $deal_id );
+	$driver_id = (int) get_post_meta( $deal_id, GW_DEAL_META_DRIVER_ID, true );
+
+	if ( ! $deal || 'gw_deal' !== $deal->post_type ) {
+		return false;
+	}
+
+	$is_owner  = (int) $deal->post_author === (int) $user_id;
+	$is_driver = $driver_id === (int) $user_id;
+
+	if ( ! $is_owner && ! $is_driver ) {
+		return false;
+	}
+
+	if ( ! in_array( $deal->post_status, array( 'pending', 'publish', 'gw_assigned' ), true ) ) {
+		return false;
+	}
+
+	wp_update_post(
+		array(
+			'ID'          => $deal_id,
+			'post_status' => 'gw_cancelled',
+		)
+	);
+
+	return true;
+}
+
+function gowonderlu_user_is_driver( $user_id ) {
+	return (bool) get_user_meta( $user_id, '_gw_driver_city', true );
+}
+
+add_action( 'add_meta_boxes', 'gowonderlu_add_deal_assign_meta_box' );
+
+function gowonderlu_add_deal_assign_meta_box() {
+	add_meta_box(
+		'gowonderlu_deal_assign',
+		'Assign Driver',
+		'gowonderlu_render_deal_assign_meta_box',
+		'gw_deal',
+		'side'
+	);
+}
+
+function gowonderlu_render_deal_assign_meta_box( $post ) {
+	if ( ! in_array( $post->post_status, array( 'publish', 'gw_assigned' ), true ) ) {
+		echo '<p>Deal must be Open (Published) before a driver can be assigned.</p>';
+		return;
+	}
+
+	$drivers = get_users(
+		array(
+			'meta_key'     => '_gw_driver_city',
+			'meta_compare' => 'EXISTS',
+		)
+	);
+
+	$current_driver_id = (int) get_post_meta( $post->ID, GW_DEAL_META_DRIVER_ID, true );
+
+	wp_nonce_field( 'gowonderlu_assign_driver', 'gowonderlu_assign_driver_nonce' );
+
+	echo '<select name="gowonderlu_assign_driver_id">';
+	echo '<option value="">— Select a driver —</option>';
+
+	foreach ( $drivers as $driver ) {
+		printf(
+			'<option value="%d" %s>%s</option>',
+			$driver->ID,
+			selected( $current_driver_id, $driver->ID, false ),
+			esc_html( $driver->display_name )
+		);
+	}
+
+	echo '</select>';
+}
+
+add_action( 'save_post_gw_deal', 'gowonderlu_save_deal_assign_meta_box' );
+
+function gowonderlu_save_deal_assign_meta_box( $post_id ) {
+	if ( ! isset( $_POST['gowonderlu_assign_driver_nonce'] ) || ! wp_verify_nonce( $_POST['gowonderlu_assign_driver_nonce'], 'gowonderlu_assign_driver' ) ) {
+		return;
+	}
+
+	if ( empty( $_POST['gowonderlu_assign_driver_id'] ) ) {
+		return;
+	}
+
+	update_post_meta( $post_id, GW_DEAL_META_DRIVER_ID, absint( $_POST['gowonderlu_assign_driver_id'] ) );
+
+	remove_action( 'save_post_gw_deal', 'gowonderlu_save_deal_assign_meta_box' );
+	wp_update_post(
+		array(
+			'ID'          => $post_id,
+			'post_status' => 'gw_assigned',
+		)
+	);
+	add_action( 'save_post_gw_deal', 'gowonderlu_save_deal_assign_meta_box' );
+}
