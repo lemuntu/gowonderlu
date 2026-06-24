@@ -280,7 +280,184 @@ Version: 0.1.0
 	color: var(--gw-navy);
 }
 
+.gw-about-block {
+	max-width: 760px;
+	margin: 0 auto;
+	padding: 16px 56px 56px;
+}
+
+.gw-about-row {
+	padding: 24px 0;
+}
+
+.gw-about-row + .gw-about-row {
+	border-top: 0.5px solid var(--gw-border);
+}
+
+.gw-about-copy h2 {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 28px;
+	color: var(--gw-navy);
+	margin: 0 0 14px;
+}
+
+.gw-about-copy p {
+	color: var(--gw-slate);
+	font-size: 15.5px;
+	line-height: 1.7;
+	margin: 0 0 14px;
+}
+
+.gw-about-where {
+	background: var(--gw-surface);
+	border-top: 0.5px solid var(--gw-border);
+	border-bottom: 0.5px solid var(--gw-border);
+	padding: 56px 56px;
+	text-align: center;
+}
+
+.gw-about-where .gw-eyebrow {
+	text-align: center;
+}
+
+.gw-about-where h2 {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 32px;
+	color: var(--gw-navy);
+	margin: 0 0 16px;
+}
+
+.gw-about-where-intro,
+.gw-about-where-outro {
+	max-width: 600px;
+	margin: 0 auto;
+	color: var(--gw-slate);
+	font-size: 15.5px;
+	line-height: 1.7;
+}
+
+.gw-about-where-outro {
+	margin-top: 36px;
+}
+
+.gw-about-cities {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	max-width: 880px;
+	margin: 36px auto 0;
+	text-align: left;
+}
+
+.gw-about-city {
+	background: var(--gw-white);
+	border: 0.5px solid var(--gw-border);
+	border-radius: 12px;
+	padding: 24px;
+}
+
+.gw-about-city h3 {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 22px;
+	color: var(--gw-navy);
+	margin: 0 0 8px;
+}
+
+.gw-about-city p {
+	color: var(--gw-slate);
+	font-size: 14px;
+	line-height: 1.55;
+	margin: 0;
+}
+
+.gw-about-trust {
+	max-width: 700px;
+	margin: 0 auto;
+	padding: 56px 56px;
+	text-align: center;
+}
+
+.gw-about-trust .gw-eyebrow {
+	text-align: center;
+}
+
+.gw-about-trust h2 {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 28px;
+	color: var(--gw-navy);
+	margin: 0 0 16px;
+}
+
+.gw-about-trust p {
+	color: var(--gw-slate);
+	font-size: 15.5px;
+	line-height: 1.7;
+}
+
+.gw-legal {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 64px 56px 96px;
+}
+
+.gw-legal .gw-eyebrow {
+	margin-bottom: 10px;
+}
+
+.gw-legal h1 {
+	font-family: 'Instrument Serif', serif;
+	font-style: italic;
+	font-size: 44px;
+	color: var(--gw-navy);
+	margin: 0 0 10px;
+}
+
+.gw-legal-updated {
+	color: var(--gw-slate);
+	font-size: 13.5px;
+	margin: 0 0 28px;
+}
+
+.gw-legal-notice {
+	background: var(--gw-surface);
+	border: 0.5px solid var(--gw-border);
+	border-radius: 10px;
+	padding: 18px 22px;
+	color: var(--gw-slate);
+	font-size: 14px;
+	line-height: 1.6;
+	margin-bottom: 40px;
+}
+
+.gw-legal-notice strong {
+	color: var(--gw-navy);
+}
+
+.gw-legal h2 {
+	font-family: 'DM Sans', sans-serif;
+	font-weight: 600;
+	font-size: 18px;
+	color: var(--gw-navy);
+	margin: 36px 0 12px;
+}
+
+.gw-legal p {
+	color: var(--gw-slate);
+	font-size: 15px;
+	line-height: 1.7;
+	margin: 0 0 4px;
+}
+
 @media (max-width: 768px) {
+	.gw-about-cities {
+		grid-template-columns: 1fr;
+	}
+
+
 	.gw-panels,
 	.gw-steps,
 	.gw-quotes {
